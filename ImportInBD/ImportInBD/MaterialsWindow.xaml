@@ -1,0 +1,62 @@
+﻿<Window x:Class="ImportInBD.MaterialsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ImportInBD"
+        mc:Ignorable="d"
+        x:Name="materialsWindow"
+        Title="База материалов" Height="450" Width="800">
+    <Window.DataContext>
+        <local:MaterialsViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <GroupItem Grid.Row="0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+                <Label Content="По артикулу"/>
+                <TextBlock Width="100"/>
+                <Label Content="По наименованию" Margin="50,0"/>
+                <TextBlock Width="350"/>
+            </StackPanel>
+        </GroupItem>
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                  ScrollViewer.CanContentScroll="True" LoadingRow="DataGrid_LoadingRow" ItemsSource="{Binding Path=Materials}" SelectedItem="{Binding SelectedMaterial}"> 
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Артикул" Width="1*" x:Name="dgcolCode" Binding="{Binding Path=MaterialID}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Материал" Width="5*" x:Name="dgcolMaterial" CanUserReorder="False" Binding="{Binding Path=MaterialName}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Количество" Width="1.3*" x:Name="dgcolCount" Binding="{Binding Path=MaterialCount}" IsReadOnly="True">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Ед.изм" Width="1*" x:Name="dgcolEdiz" Binding="{Binding Path=MaterialUnit.Name}" IsReadOnly="True">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Width="150" Margin="5,5,10,5" Content="OK" FontSize="16" FontWeight="DemiBold" Command="{Binding AcceptCommand}" 
+                    CommandParameter="{Binding ElementName=materialsWindow}"/>
+            <Button Width="150" Margin="5,5,10,5" Content="Cancel" FontSize="16" FontWeight="DemiBold" Command="{Binding CancelCommand}"
+                    CommandParameter="{Binding ElementName=materialsWindow}"/>
+        </StackPanel>
+    </Grid>
+</Window>
