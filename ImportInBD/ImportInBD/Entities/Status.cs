@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImportInBD
+namespace ImportInBD.Entities
 {
-    public class Status:IEntityFromAccess
+    public class Status : IEntityFromAccess
     {
         public int Id { get; set; }
         public string? NameStatus { get; set; }

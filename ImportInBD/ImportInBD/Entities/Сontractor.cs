@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImportInBD
+namespace ImportInBD.Entities
 {
-    public class Contractor:IEntityFromAccess
+    public class Contractor : IEntityFromAccess
     {
         public int ContractorID { get; set; }
         public string? ContractorName { get; set; }

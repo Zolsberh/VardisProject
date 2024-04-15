@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImportInBD
+namespace ImportInBD.Entities
 {
-    public class FurnitureStatus: IEntityFromAccess
+    public class FurnitureStatus : IEntityFromAccess
     {
         public int FurnitureStatusID { get; set; }
         public string FurnitureStatusName { get; set; }

@@ -3,10 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ImportInBD"
+        xmlns:local="clr-namespace:ImportInBD.ViewModels"
+        xmlns:extToolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Модуль импорта данных" Height="450" Width="850">
+        Title="Модуль импорта данных" Closing="Window_Closing" Loaded="Window_Loaded">
     <Window.DataContext>
         <local:ApplicationViewModel/>
     </Window.DataContext>
@@ -25,7 +27,8 @@
         </Grid.ColumnDefinitions>
         <StackPanel x:Name="spNumberOrder" Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Height="auto">
             <Label x:Name="lbNumberOfOrder" Content="№ Заказа" Margin="5,2,0,5"/>
-            <TextBox x:Name="tbxNumberOfOrder" BorderThickness="2" BorderBrush="Gray" Margin="5,5,5,5" TextAlignment="Center" Width="100" Text="{Binding Order.Name, Mode=TwoWay}"/>
+            <TextBox x:Name="tbxNumberOfOrder" BorderThickness="2" BorderBrush="Gray" Margin="5,5,5,5" TextAlignment="Center" 
+                     Width="100" Text="{Binding Order.Name, Mode=TwoWay}"/>
         </StackPanel>
         <StackPanel x:Name="spDateOfShipment" Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Height="auto">
             <Label x:Name="lbDateOfShipment" Content="Дата отгрузки" Margin="5,0,0,5"/>
@@ -33,36 +36,40 @@
         </StackPanel>
         <StackPanel x:Name="spStatusOfOrder" Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Height="auto">
             <Label x:Name="lbStatusOfOrder" Content="Статус" Margin="5,0,0,5"/>
-            <ComboBox x:Name="cbxStatusOfOrder" Width="70" Margin="5,5,5,5" VerticalAlignment="Top" SelectedValuePath="Id" DisplayMemberPath="NameStatus"
-                      ItemsSource="{Binding Statuses}" SelectedItem="{Binding Order.Status, Mode=TwoWay}"/>
+            <ComboBox x:Name="cbxStatusOfOrder" Width="150" Margin="5,5,5,5" VerticalAlignment="Top" 
+                      SelectedValuePath="Id" DisplayMemberPath="NameStatus" ItemsSource="{Binding Statuses}" SelectedItem="{Binding Order.Status, Mode=TwoWay}"/>
         </StackPanel>
         <StackPanel x:Name="spManagers" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Height="auto">
             <Label x:Name="lbManagers" Content="Менеджер" Margin="5,0,0,5"/>
-            <ComboBox x:Name="cbxManagers" Width="120" Margin="5,5,5,5" VerticalAlignment="Top" DisplayMemberPath="ManagerName" SelectedValuePath="ManagerID"
+            <ComboBox x:Name="cbxManagers" Width="150" Margin="5,5,5,5" VerticalAlignment="Top" DisplayMemberPath="ManagerName" SelectedValuePath="ManagerID"
                       ItemsSource="{Binding Managers}" SelectedItem="{Binding Order.Manager, Mode=TwoWay}"/>
         </StackPanel>
         <StackPanel x:Name="spConstructors" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" Height="auto">
             <Label x:Name="lbConstructors" Content="Конструктор" Margin="5,0,0,5"/>
-            <ComboBox x:Name="cbxConstructors" Width="120" Margin="5,5,5,5" VerticalAlignment="Top" DisplayMemberPath="ConstructorName" SelectedValuePath="ConstructorID"
+            <ComboBox x:Name="cbxConstructors" Width="150" Margin="5,5,5,5" VerticalAlignment="Top" DisplayMemberPath="ConstructorName" SelectedValuePath="ConstructorID"
                       ItemsSource="{Binding Constructors}" SelectedItem="{Binding Order.Constructor, Mode=TwoWay}"/>
         </StackPanel>
         <StackPanel x:Name="spContractors" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal" Height="auto">
             <Label x:Name="lbContractors" Content="Исполнитель" Margin="5,0,0,5"/>
-            <ComboBox x:Name="cbxContractors" Width="120" Margin="5,5,5,5" VerticalAlignment="Top" DisplayMemberPath="ContractorName" SelectedValuePath="ContractorID"
+            <ComboBox x:Name="cbxContractors" Width="150" Margin="5,5,5,5" VerticalAlignment="Top" DisplayMemberPath="ContractorName" SelectedValuePath="ContractorID"
                       ItemsSource="{Binding Contractors}" SelectedItem="{Binding Order.Contractor, Mode=TwoWay}"/>
         </StackPanel>
-        <StackPanel x:Name="spEditorPanel" Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Height="auto">
-            <Button x:Name="butDeleteMaterial" Width="150" Margin="5,5,10,5" Content="Удалить материал" FontSize="16" FontWeight="DemiBold" 
+        <StackPanel x:Name="spEditorPanel" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" Height="auto">
+            <Button x:Name="butDeleteMaterial" Padding="5" Margin="5,5,10,5" Content="Удалить материал" FontSize="16" FontWeight="DemiBold" 
                     Command="{Binding DeleteAcccountByOrderCommand}"/>
+            <Button x:Name="addMaterial" Padding="5" Margin="5,5,10,5" Content="Добавить материал" FontSize="16" FontWeight="DemiBold" 
+                    Command="{Binding AddMaterialCommand}"/>
+            <Button x:Name="editMaterial" Padding="5" Margin="5,5,10,5" Content="Изменить текущий" FontSize="16" FontWeight="DemiBold" 
+                    Command="{Binding EditMaterialCommand}"/>
         </StackPanel>
         <StackPanel x:Name="spCommandPanel" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" Height="auto" HorizontalAlignment="Right">
-            <Button x:Name="butImport" Width="150" Margin="5,5,10,5" Content="Импорт" FontSize="16" FontWeight="DemiBold" Command="{Binding ImportCommand}"/>
-            <Button x:Name="butLoadInDB" Width="150" Margin="10,5,10,5" Content="Загрузка в БД" FontSize="16" FontWeight="DemiBold" Command="{Binding LoadInDBCommand}"/>
-            <Button x:Name="butCancel" Width="150" Margin="10,5,20,5" Content="Отмена" FontSize="16" FontWeight="DemiBold" Command="{Binding CancelComand}"/>
+            <Button x:Name="butImport" Padding="20,0" Margin="5,5,10,5" Content="Импорт" FontSize="16" FontWeight="DemiBold" Command="{Binding ImportCommand}"/>
+            <Button x:Name="butLoadInDB" Padding="15,0" Margin="10,5,10,5" Content="Загрузка в БД" FontSize="16" FontWeight="DemiBold" Command="{Binding LoadInDBCommand}"/>
+            <Button x:Name="butCancel" Padding="20,0" Margin="10,5,20,5" Content="Отмена" FontSize="16" FontWeight="DemiBold" Command="{Binding CancelComand}"/>
         </StackPanel>
         <DataGrid x:Name="dgAccountingByOrders" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" AutoGenerateColumns="False"
                   ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"
-                  LoadingRow="dgAccountingByOrders_LoadingRow" ItemsSource="{Binding AccountingByOrders}" SelectedItem="{Binding SelectedAccountByOrder}">
+                  LoadingRow="DgAccountingByOrders_LoadingRow" ItemsSource="{Binding AccountingByOrders}" SelectedItem="{Binding SelectedAccountByOrder}">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="FontWeight" Value="Bold"/>
@@ -70,42 +77,55 @@
                 </Style>
             </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Артикул" Width="1*" x:Name="dgcolCode" Binding="{Binding Path=MaterialId}"/>
-                <DataGridTextColumn Header="Материал" Width="5*" x:Name="dgcolMaterial" CanUserReorder="False" Binding="{Binding Path=MaterialName.MaterialName}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Ед.изм" Width="1*" x:Name="dgcolEdiz" Binding="{Binding Path=Ediz}" IsReadOnly="True">
+                <DataGridTextColumn Header="Артикул" Width="1*" x:Name="dgcolCode" Binding="{Binding Path=MaterialId, Mode=TwoWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Материал" Width="5*" x:Name="dgcolMaterial" CanUserReorder="False" Binding="{Binding Path=MaterialName.MaterialName, Mode=TwoWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Ед.изм" Width="1*" x:Name="dgcolEdiz" Binding="{Binding Path=Ediz, Mode=TwoWay}" IsReadOnly="True">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="HorizontalAlignment" Value="Center"/>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Количество" Width="1.3*" x:Name="dgcolCount" Binding="{Binding Path=MaterialCount}" IsReadOnly="True">
+                <!--<DataGridTextColumn Header="Количество" Width="1.3*" x:Name="dgcolCount" Binding="{Binding Path=MaterialCount}">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="HorizontalAlignment" Value="Center"/>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="КИМ" Width="1*" x:Name="dgcolMaterialUtolizationFactor" CanUserReorder="True" 
-                                    Binding="{Binding Path=MaterialUtolizationFactor, Mode=TwoWay}">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="КО" Width="1*" x:Name="dgcolRamainderRatio" Binding="{Binding Path=RamainderRatio,Mode=TwoWay}">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-                <DataGridTemplateColumn Header="Участок" Width="1.5*">
+                </DataGridTextColumn>-->
+                <DataGridTemplateColumn Header="Количество" Width="1.3*" x:Name="dgcolCount" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ComboBox ItemsSource="{Binding DataContext.Districts, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window }}}"
-                                      DisplayMemberPath="Name" SelectedItem="{Binding District, UpdateSourceTrigger=PropertyChanged}"/>
+                            <extToolkit:DoubleUpDown ShowButtonSpinner="False" Value="{Binding Path=MaterialCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="КИМ" Width="1*" x:Name="dgcolMaterialUtolizationFactor">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <extToolkit:DoubleUpDown ShowButtonSpinner="False" Value="{Binding Path=MaterialUtolizationFactor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="КО" Width="1*" x:Name="dgcolRamainderRatio">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <extToolkit:DoubleUpDown ShowButtonSpinner="False" Value="{Binding Path=RamainderRatio, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Участок" Width="1.5*" x:Name="dcolComboBox">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox Name="cbDistricts" ItemsSource="{Binding DataContext.Districts, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window }}}"
+                                      DisplayMemberPath="Name" SelectedItem="{Binding District, UpdateSourceTrigger=PropertyChanged}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="KeyDown">
+                                        <i:InvokeCommandAction Command="{Binding Source={StaticResource AppViewModel}, Path=CopyInsertContent}"
+                                                               CommandParameter="{Binding ElementName=cbDistricts}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

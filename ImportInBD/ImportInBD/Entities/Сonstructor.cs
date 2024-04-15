@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImportInBD
+namespace ImportInBD.Entities
 {
-    public class Constructor: IEntityFromAccess
+    public class Constructor : IEntityFromAccess
     {
         public int ConstructorID { get; set; }
         public string? ConstructorName { get; set; }

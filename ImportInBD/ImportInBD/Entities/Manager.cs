@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImportInBD
+namespace ImportInBD.Entities
 {
-    public class Manager:IEntityFromAccess
+    public class Manager : IEntityFromAccess
     {
         public int ManagerID { get; set; }
         public string? ManagerName { get; set; }
         public string? Phone { get; set; }
+
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace ImportInBD
+namespace ImportInBD.Commands
 {
     class RelayCommand : ICommand
     {
@@ -17,18 +17,18 @@ namespace ImportInBD
 
         public RelayCommand(Action<object> execute, Func<object, bool> executeFunc = null)
         {
-            this._execute = execute;
-            this._executeFunc = executeFunc;
+            _execute = execute;
+            _executeFunc = executeFunc;
         }
 
         public bool CanExecute(object? parameter)
         {
-            return this._executeFunc == null || this._executeFunc(parameter);
+            return _executeFunc == null || _executeFunc(parameter);
         }
 
         public void Execute(object? parameter)
         {
-            this._execute(parameter);
+            _execute(parameter);
         }
     }
 }

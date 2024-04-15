@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImportInBD
+namespace ImportInBD.Entities
 {
-    public class Material:IEntityFromAccess
+    public class Material : IEntityFromAccess
     {
-        public int MaterialID { get; set; }
+        public int? MaterialID { get; set; }
         public string? MaterialName { get; set; }
-        public Unit? MaterialUnit { get; set;}
+        public Unit? MaterialUnit { get; set; }
         public double MaterialCount { get; set; }
     }
 }

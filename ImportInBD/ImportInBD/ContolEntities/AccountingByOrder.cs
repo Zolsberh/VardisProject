@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ImportInBD.Entities;
 
-namespace ImportInBD
+namespace ImportInBD.ContolEntities
 {
     public class AccountingByOrder
     {
-       // private District? district;
         private Material? materialName;
-        private int materialId;
+        private int? materialId;
         private int accountigByOrdersID;
         private string? ediz;
-        private double ramainderRatio;
+        private double ramainderRatio = 0.0;
 
         public int AccountigByOrdersID { get => accountigByOrdersID; set => accountigByOrdersID = value; }
-        public int MaterialId { get => materialId; set => materialId = value; }
+        public int? MaterialId { get => materialId; set => materialId = value; }
         public Material? MaterialName { get => materialName; set => materialName = value; }
         public string? Ediz { get => ediz; set => ediz = value; }
         public double MaterialCount { get; set; }

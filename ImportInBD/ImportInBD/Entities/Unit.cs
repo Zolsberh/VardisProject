@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImportInBD
+namespace ImportInBD.Entities
 {
     public class Unit
     {
-        public int Id {  get; set; }
-        public string Name { get; set; }
+        public int Id { get; set; }
+        public string? Name { get; set; }
     }
 }
