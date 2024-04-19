@@ -37,7 +37,8 @@ namespace ImportInBD.Controllers
                             materialFromDBF.CODE = string.Empty;
 
                         materialFromDBF.NAME = reader.GetString(1);
-                        materialFromDBF.EDIZ = reader.GetString(2);
+                        if (materialFromDBF.EDIZ != null)
+                            materialFromDBF.EDIZ = reader.GetString(2);
                         materialFromDBF.KOLORDER = reader.GetDouble(3);
                         list.Add(materialFromDBF);
                     }

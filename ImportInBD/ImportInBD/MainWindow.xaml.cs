@@ -1,8 +1,11 @@
 ﻿using ImportInBD.Properties;
+using ImportInBD.ContolEntities;
 using Microsoft.Win32;
+using Microsoft.Xaml.Behaviors;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
@@ -18,6 +21,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Xceed.Wpf.AvalonDock.Controls;
+using ImportInBD.Entities;
+using System.Windows.Controls.Primitives;
 
 
 
@@ -28,6 +34,8 @@ namespace ImportInBD
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        int index;//удалить
         public MainWindow()
         {
 
@@ -77,6 +85,22 @@ namespace ImportInBD
             Properties.Settings.Default.Save();
         }
 
+        private void dgAccountingByOrders_CopyingRowClipboardContent(object sender, DataGridRowClipboardEventArgs e)
+        {
+            DataGrid dataGrid = (DataGrid)sender;
+            ComboBox box = (ComboBox)dataGrid.CurrentCell.Column.GetCellContent(e.Item);
+            index = box.SelectedIndex;
+        }
+
+        private void dgAccountingByOrders_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.V)
+            {
+                DataGrid dataGrid = (DataGrid)sender;
+                ComboBox box = (ComboBox)dataGrid.CurrentCell.Column.GetCellContent(dataGrid.CurrentCell.Item);
+                box.SelectedIndex = index;
+            }
+        }
     }
 
 }

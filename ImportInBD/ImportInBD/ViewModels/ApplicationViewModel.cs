@@ -7,6 +7,7 @@ using Microsoft.Xaml.Behaviors;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,7 +27,7 @@ namespace ImportInBD.ViewModels
         List<Material>? materialsFromAccess;
         AccountingByOrder? selectedAccountByOrder;
         Order? order;
-        int index = -1;
+        int index;
         readonly List<Material> materials;
 
         RelayCommand? importCommand;
@@ -309,26 +310,34 @@ namespace ImportInBD.ViewModels
             });
 
         public RelayCommand CopyInsertContent =>
-            copyInsertContent ??= new RelayCommand((combo) => 
+            copyInsertContent ??= new RelayCommand((data) => 
             {
-                
-                ComboBox box = (ComboBox)combo;
-                
-                MessageBox.Show($"{box.TemplatedParent.FindVisualAncestor<DataGrid>().CurrentCell.Item}");
+                //DataGrid dataGrid = (DataGrid)data;
+                //if(((AccountingByOrder)dataGrid.CurrentCell.Item).District != null)
+                //{
+                //    data.
+                //}
+              
+
                 //box.KeyDown += (s, e) =>
                 //{
-                //    if(e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.C)
+                //    if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.C)
                 //    {
                 //        index = box.SelectedIndex;
                 //        MessageBox.Show($"{index}");
                 //    }
-                //    if(e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.V) 
+                //    if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.V)
                 //    {
                 //        box.SelectedIndex = index;
                 //        MessageBox.Show($"{index}");
                 //    }
                 //};
             });
+
+        private void Col_CopyingCellClipboardContent(object? sender, DataGridCellClipboardEventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
 
         private (bool, Material?) IsDistrictNull()
         {
