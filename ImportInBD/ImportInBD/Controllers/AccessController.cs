@@ -32,47 +32,26 @@ namespace ImportInBD.Controllers
                         {
                             case EntityFromAccess.Manager:
                                 entity = GetManager(reader);
-                                //man.ManagerID = reader.GetInt32(0);
-                                //man.ManagerName = reader.GetString(1);
-                                //if (reader["Телефон"] != DBNull.Value)
-                                //{
-                                //    man.Phone = reader.GetString(2);
-                                //}
-                                //else
-                                //    man.Phone = string.Empty;
                                 entities.Add(entity);
                                 break;
                             case EntityFromAccess.Material:
                                 entity = GetMaterial(reader);
-                                //mat.MaterialID = reader.GetInt32(0);
-                                //mat.MaterialName = reader.GetString(1);
-                                //mat.MaterialCount = Math.Round(reader.GetFloat(2), 3); 
-                                //mat.MaterialUnit = new Unit();
-                                //mat.MaterialUnit.Name = reader.GetString(3);
                                 entities.Add(entity);
                                 break;
                             case EntityFromAccess.District:
                                 entity = GetDistrict(reader);
-                                //district.Id = reader.GetInt32(0);
-                                //district.Name = reader.GetString(1);
                                 entities.Add(entity);
                                 break;
                             case EntityFromAccess.Status:
                                 entity = GetStatus(reader);
-                                //status.NameStatus = reader.GetString(1);
-                                //status.Id = reader.GetInt32(0);
                                 entities.Add(entity);
                                 break;
                             case EntityFromAccess.Constructor:
                                 entity = GetConstructor(reader);
-                                //constructor.ConstructorName = reader.GetString(1);
-                                //constructor.ConstructorID = reader.GetInt32(0);
                                 entities.Add(entity);
                                 break;
                             case EntityFromAccess.Contractor:
                                 entity = GetContractor(reader);
-                                //contractor.ContractorName = reader.GetString(1);
-                                //contractor.ContractorID = reader.GetInt32(0);
                                 entities.Add(entity);
                                 break;
                             case EntityFromAccess.Order:
@@ -250,7 +229,7 @@ namespace ImportInBD.Controllers
         {
             int? orderID = null;
             var orders = GetOrdersAll(connectionString);
-            Order? order = orders.FirstOrDefault(o => o.Name == nameOrder && o.DeadLine == dataDeadLine);
+            Order? order = orders.FirstOrDefault(o => o.Name == nameOrder && o.DeadLine.Year == dataDeadLine.Year);
             if (order != null)
                 orderID = order.Id;
 

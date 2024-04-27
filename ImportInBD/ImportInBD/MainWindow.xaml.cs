@@ -35,13 +35,15 @@ namespace ImportInBD
     public partial class MainWindow : Window
     {
 
-        int index;//удалить
+        int index = -1;//удалить
+        District? district;//удалить
         public MainWindow()
         {
 
             Thread.Sleep(1000);
 
             InitializeComponent();
+            district = new District();
 
         }
 
@@ -88,8 +90,17 @@ namespace ImportInBD
         private void dgAccountingByOrders_CopyingRowClipboardContent(object sender, DataGridRowClipboardEventArgs e)
         {
             DataGrid dataGrid = (DataGrid)sender;
-            ComboBox box = (ComboBox)dataGrid.CurrentCell.Column.GetCellContent(e.Item);
-            index = box.SelectedIndex;
+            district = ((AccountingByOrder)dataGrid.SelectedItem).District;
+            try
+            {
+                ComboBox? box = dataGrid.CurrentCell.Column.GetCellContent(e.Item).FindVisualChildren<ComboBox>().FirstOrDefault();
+                if (box != null)
+                    index = box.SelectedIndex;
+            }
+            catch
+            {
+                ///
+            }            
         }
 
         private void dgAccountingByOrders_KeyDown(object sender, KeyEventArgs e)
@@ -97,8 +108,10 @@ namespace ImportInBD
             if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.V)
             {
                 DataGrid dataGrid = (DataGrid)sender;
-                ComboBox box = (ComboBox)dataGrid.CurrentCell.Column.GetCellContent(dataGrid.CurrentCell.Item);
-                box.SelectedIndex = index;
+                ((AccountingByOrder)dataGrid.SelectedItem).District = district;
+                ComboBox? box = dataGrid.CurrentCell.Column.GetCellContent(dataGrid.CurrentCell.Item).FindVisualChildren<ComboBox>().FirstOrDefault();
+                if(box != null)
+                    box.SelectedIndex = index;
             }
         }
     }

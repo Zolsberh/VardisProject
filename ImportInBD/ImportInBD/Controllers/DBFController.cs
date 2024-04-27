@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
+using System.IO;
+using System.Text;
 using ImportInBD.ContolEntities;
 
 namespace ImportInBD.Controllers
@@ -30,16 +32,19 @@ namespace ImportInBD.Controllers
                         MaterialFromDBF materialFromDBF = new();
                         //MaterialFromDBF materialFromDBF = new MaterialFromDBF();
                         if (reader["CODE"] != DBNull.Value)
-                        {
                             materialFromDBF.CODE = reader.GetString(0);
-                        }
                         else
                             materialFromDBF.CODE = string.Empty;
 
                         materialFromDBF.NAME = reader.GetString(1);
-                        if (materialFromDBF.EDIZ != null)
+
+                        if (reader["EDIZ"] != DBNull.Value)
                             materialFromDBF.EDIZ = reader.GetString(2);
+                        else
+                            materialFromDBF.EDIZ = string.Empty;
+
                         materialFromDBF.KOLORDER = reader.GetDouble(3);
+
                         list.Add(materialFromDBF);
                     }
                 }

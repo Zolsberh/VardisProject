@@ -3,10 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ImportInBD.ViewModels" d:DataContext="{d:DesignInstance Type=local: ControlViewModel}"
+        xmlns:local="clr-namespace:ImportInBD.ViewModels" 
         mc:Ignorable="d"
         x:Name="controlWindow"
         Title="Проверка товара" Height="600" Width="1200">
+    <Window.DataContext>
+        <local:ControlViewModel/>
+    </Window.DataContext>
     <Grid x:Name="gridControl">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -56,7 +59,7 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Количество" Width="1.3*" x:Name="dgcolCount" Binding="{Binding Path=Count}" IsReadOnly="True">
+                <DataGridTextColumn Header="Количество" Width="1.3*" x:Name="dgcolCount" Binding="{Binding Path=Count}" IsReadOnly="False">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="HorizontalAlignment" Value="Center"/>

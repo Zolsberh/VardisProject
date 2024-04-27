@@ -36,23 +36,23 @@
         </StackPanel>
         <StackPanel x:Name="spStatusOfOrder" Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Height="auto">
             <Label x:Name="lbStatusOfOrder" Content="Статус" Margin="5,0,0,5"/>
-            <ComboBox x:Name="cbxStatusOfOrder" Width="150" Margin="5,5,5,5" VerticalAlignment="Top" 
+            <ComboBox x:Name="cbxStatusOfOrder" Width="150" Margin="5,5,5,5" VerticalAlignment="Top" IsEditable="True"
                       SelectedValuePath="Id" DisplayMemberPath="NameStatus" ItemsSource="{Binding Statuses}" SelectedItem="{Binding Order.Status, Mode=TwoWay}"/>
         </StackPanel>
         <StackPanel x:Name="spManagers" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Height="auto">
             <Label x:Name="lbManagers" Content="Менеджер" Margin="5,0,0,5"/>
             <ComboBox x:Name="cbxManagers" Width="150" Margin="5,5,5,5" VerticalAlignment="Top" DisplayMemberPath="ManagerName" SelectedValuePath="ManagerID"
-                      ItemsSource="{Binding Managers}" SelectedItem="{Binding Order.Manager, Mode=TwoWay}"/>
+                      ItemsSource="{Binding Managers}" IsEditable="True" SelectedItem="{Binding Order.Manager, Mode=TwoWay}"/>
         </StackPanel>
         <StackPanel x:Name="spConstructors" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" Height="auto">
             <Label x:Name="lbConstructors" Content="Конструктор" Margin="5,0,0,5"/>
             <ComboBox x:Name="cbxConstructors" Width="150" Margin="5,5,5,5" VerticalAlignment="Top" DisplayMemberPath="ConstructorName" SelectedValuePath="ConstructorID"
-                      ItemsSource="{Binding Constructors}" SelectedItem="{Binding Order.Constructor, Mode=TwoWay}"/>
+                      ItemsSource="{Binding Constructors}" IsEditable="True" SelectedItem="{Binding Order.Constructor, Mode=TwoWay}"/>
         </StackPanel>
         <StackPanel x:Name="spContractors" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal" Height="auto">
             <Label x:Name="lbContractors" Content="Исполнитель" Margin="5,0,0,5"/>
             <ComboBox x:Name="cbxContractors" Width="150" Margin="5,5,5,5" VerticalAlignment="Top" DisplayMemberPath="ContractorName" SelectedValuePath="ContractorID"
-                      ItemsSource="{Binding Contractors}" SelectedItem="{Binding Order.Contractor, Mode=TwoWay}"/>
+                      ItemsSource="{Binding Contractors}" IsEditable="True" SelectedItem="{Binding Order.Contractor, Mode=TwoWay}"/>
         </StackPanel>
         <StackPanel x:Name="spEditorPanel" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" Height="auto">
             <Button x:Name="butDeleteMaterial" Padding="5" Margin="5,5,10,5" Content="Удалить материал" FontSize="16" FontWeight="DemiBold" 
@@ -69,7 +69,7 @@
         </StackPanel>
         <DataGrid x:Name="dgAccountingByOrders" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" AutoGenerateColumns="False"
                   CopyingRowClipboardContent="dgAccountingByOrders_CopyingRowClipboardContent"
-                  KeyDown="dgAccountingByOrders_KeyDown"
+                  KeyDown="dgAccountingByOrders_KeyDown" 
                   ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"
                   LoadingRow="DgAccountingByOrders_LoadingRow" ItemsSource="{Binding AccountingByOrders}" SelectedItem="{Binding SelectedAccountByOrder}">
             <DataGrid.ColumnHeaderStyle>
@@ -109,20 +109,37 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridComboBoxColumn Header="Участок" Width="1.5*" x:Name="dcolComboBox" DisplayMemberPath="Name" 
-                                        SelectedValueBinding="{Binding Id}" SelectedItemBinding="{Binding District}">
+                <!--<DataGridComboBoxColumn Header="Участок" Width="1.5*" x:Name="dcolComboBox" TextBinding="{Binding District.Name}">
                     <DataGridComboBoxColumn.ElementStyle>
                         <Style TargetType="ComboBox">
                             <Setter Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Districts}"/>
+                            <Setter Property="SelectedItem" Value="{Binding Path=District, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Setter Property="DisplayMemberPath" Value="Name"/>
+                            <Setter Property="IsEditable" Value="True"/>
                         </Style>
                     </DataGridComboBoxColumn.ElementStyle>
                     <DataGridComboBoxColumn.EditingElementStyle>
                         <Style TargetType="ComboBox">
                             <Setter Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Districts}"/>
+                            <Setter Property="SelectedItem" Value="{Binding Path=District, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Setter Property="DisplayMemberPath" Value="Name"/>
+                            <Setter Property="IsEditable" Value="True"/>
                         </Style>
                     </DataGridComboBoxColumn.EditingElementStyle>
-                    
-                </DataGridComboBoxColumn>
+                </DataGridComboBoxColumn>-->
+
+                <DataGridTemplateColumn Header="Участок" Width="1.5*" x:Name="dcolComboBox">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox IsEditable="True"
+                                      DisplayMemberPath="Name"
+                                      SelectedItem="{Binding Path=District, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      Text="{Binding District.Name}" 
+                                      ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Districts}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
             </DataGrid.Columns>
             <!--<i:Interaction.Triggers>
                 <i:EventTrigger EventName="KeyDown">
